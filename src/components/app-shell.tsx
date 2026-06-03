@@ -36,7 +36,7 @@ function SyncPill() {
     return <span className="pill subtle">Synced</span>;
   }
 
-  return <span className="pill subtle">Local-first</span>;
+  return <Link href="/profile" className="button" style={{ minHeight: "auto", padding: "0.6rem 1rem", fontSize: "0.8rem" }}>Open profile</Link>;
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -57,7 +57,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <header className="topbar">
           <div>
             <p className="eyebrow">Shared progress</p>
-            <h1 className="text-[1.05rem] font-black">Progress</h1>
+            <h1 className="text-[0.95rem] font-black">Progress</h1>
           </div>
           <SyncPill />
         </header>
