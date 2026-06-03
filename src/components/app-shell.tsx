@@ -17,26 +17,37 @@ const navIcons = {
   Profile: UserRound
 };
 
-function SyncPill() {
-  const { online, syncing, syncError, lastSyncAt } = useApp();
+function HeaderAction() {
+  const { session, online, syncing, syncError, lastSyncAt } = useApp();
+
+  let syncLabel: string | null = null;
+  let syncClassName = "pill subtle";
 
   if (syncing) {
-    return <span className="pill">Syncing</span>;
+    syncLabel = "Syncing";
+    syncClassName = "pill";
+  } else if (!online) {
+    syncLabel = "Offline";
+    syncClassName = "pill warning";
+  } else if (syncError) {
+    syncLabel = "Sync issue";
+    syncClassName = "pill danger";
+  } else if (lastSyncAt) {
+    syncLabel = "Synced";
   }
 
-  if (!online) {
-    return <span className="pill warning">Offline</span>;
-  }
-
-  if (syncError) {
-    return <span className="pill danger">Sync issue</span>;
-  }
-
-  if (lastSyncAt) {
-    return <span className="pill subtle">Synced</span>;
-  }
-
-  return <Link href="/profile" className="button" style={{ minHeight: "auto", padding: "0.6rem 1rem", fontSize: "0.8rem" }}>Open profile</Link>;
+  return (
+    <div className="header-actions">
+      <Link
+        href="/profile"
+        className="button"
+        style={{ minHeight: "auto", padding: "0.6rem 1rem", fontSize: "0.8rem" }}
+      >
+        {session ? "Open profile" : "Sign in"}
+      </Link>
+      {session && syncLabel ? <span className={syncClassName}>{syncLabel}</span> : null}
+    </div>
+  );
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -59,7 +70,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <p className="eyebrow">Shared progress</p>
             <h1 className="text-[0.95rem] font-black">Progress</h1>
           </div>
-          <SyncPill />
+          <HeaderAction />
         </header>
         <motion.main
           key={pathname}

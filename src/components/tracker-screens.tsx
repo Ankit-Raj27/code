@@ -134,7 +134,7 @@ function SignInNotice() {
       <h2>Sign in to sync</h2>
       <p>Local pages load now, and cloud sync unlocks after both friends sign in.</p>
       <Link href="/profile" className="button">
-        Open profile
+        Sign in
       </Link>
     </section>
   );
